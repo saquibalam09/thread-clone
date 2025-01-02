@@ -47,7 +47,7 @@ export default function LoginCard() {
         return;
       }
       localStorage.setItem("user-threads", JSON.stringify(data));
-      setUser(data);
+      setUser(data); //todo why do i need to write extra setUser when in atom its getting setted by deafualt by gettig data from localstorage
     } catch (error) {
       showToast("Error", error, "error");
     } finally {

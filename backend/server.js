@@ -6,6 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import cloudinary from "cloudinary";
 import morgan from "morgan";
+import cors from "cors";
 
 dotenv.config();
 
@@ -14,6 +15,13 @@ const app = express();
 
 const PORT = process.env.PORT || 6000;
 
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  })
+);
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -21,7 +29,7 @@ cloudinary.config({
 });
 
 app.use(morgan("dev"));
-app.use(express.json()); // for parsing application/json to pass json data in the body
+app.use(express.json({ limit: "50mb" })); // for parsing application/json to pass json data in the body
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded   to pass form data in the body
 
 app.use(cookieParser()); // for parsing cookies
@@ -30,6 +38,6 @@ app.use(cookieParser()); // for parsing cookies
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
   console.log("Server is running on port 5000");
 });

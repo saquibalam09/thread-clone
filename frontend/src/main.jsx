@@ -33,6 +33,7 @@ const colors = {
 const theme = extendTheme({ config, styles, colors });
 
 createRoot(document.getElementById("root")).render(
+  // strict mode renders the app twice to detect any issues on development
   <StrictMode>
     <RecoilRoot>
       <BrowserRouter>
